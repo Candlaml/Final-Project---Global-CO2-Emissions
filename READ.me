@@ -1,0 +1,159 @@
+# Global CO₂ Emissions Analysis (1992–2022)
+
+This project explores global carbon dioxide (CO₂) and greenhouse gas emissions using publicly available data from [Our World in Data](https://github.com/owid/co2-data). It analyzes emission trends, identifies top emitters, and uncovers relationships between emissions, population, GDP, energy consumption, and temperature change. The project also investigates decoupling dynamics between economic growth and emissions.
+
+---
+
+## Dataset Overview
+
+- **Source**: [OWID CO₂ Dataset](https://github.com/owid/co2-data)  
+- **Format**: CSV  
+- **Rows**: ~50,000  
+- **Columns**: 79  
+- **Key Variables**:  
+  - `country`: Country or region name  
+  - `year`: Year of observation  
+  - `co2`: Total CO₂ emissions (million tonnes)  
+  - `co2_per_capita`: Emissions per person  
+  - `gdp`: Gross Domestic Product (USD)  
+  - `population`: Total population  
+  - `primary_energy_consumption`: Total energy use  
+- **Time Range**: Covers historical data from 1750 to the most recent year available (typically 2022); analysis focuses on 1992–2022
+
+---
+
+## Libraries Used
+
+- pandas  
+- numpy  
+- seaborn  
+- matplotlib  
+- sqlite3
+
+---
+
+## Data Cleaning and Preparation
+
+### Initial Inspection
+
+- Loaded the dataset and printed its shape and column names  
+- Previewed the first few rows and checked for missing values
+
+### Country Filtering
+
+- Removed non-sovereign entities and aggregate regions (e.g., "World", "Asia", "European Union")  
+- Replaced ambiguous entries (e.g., "Congo" changed to "Republic of the Congo")  
+- Verified the final list against a curated set of 191 sovereign countries
+
+### Time Range Restriction
+
+- Filtered data to include only years from 1992 to 2022  
+- Saved the cleaned subset as `df_final_92.csv`
+
+### Columns Selected for Analysis
+
+The following 25 columns were retained to answer key questions:
+
+- Identifiers: `country`, `iso_code`, `year`  
+- Demographics and Economy: `population`, `gdp`  
+- Emissions Volume: `co2`, `co2_per_capita`, `co2_growth_abs`, `co2_growth_prct`  
+- Emissions Sources: `coal_co2`, `oil_co2`, `gas_co2`, `cement_co2`, `flaring_co2`, `land_use_change_co2`  
+- Energy Metrics: `primary_energy_consumption`, `energy_per_capita`, `energy_per_gdp`, `co2_per_unit_energy`, `co2_per_gdp`  
+- Environmental Impact: `total_ghg`, `methane`, `nitrous_oxide`, `temperature_change_from_co2`, `temperature_change_from_ghg`
+
+### Missing Data Analysis
+
+- Calculated missing value percentages for each selected column  
+- Visualized missingness using a bar chart
+
+---
+
+## Climate Emissions Analysis — Decoupling, Attribution and Top Emitters
+
+### Overview
+
+This analysis focuses on identifying decoupling trends, top emitters, and temperature attribution. Using the curated dataset (`df_final_92`), we explore CO₂, CH₄, and N₂O emissions across countries and time, highlighting economic and environmental dynamics.
+
+### Key Features
+
+- Top-Decile Emissions Composition  
+- Top Emitters by Time Window  
+- Temperature Attribution  
+- Decoupling Classification
+
+### Methodology
+
+- CAGR Calculation: Compound Annual Growth Rate over 5 years  
+- Top-Decile Filtering: 90th percentile threshold per gas  
+- Correlation Analysis: Pearson method for emissions vs temperature  
+- Classification Logic: Based on GDP and CO₂ growth direction
+
+### Tools Used
+
+- Python (Pandas, NumPy, Matplotlib, Seaborn)  
+- Jupyter Notebook  
+- Optional: GeoPandas, Plotly for mapping
+
+---
+
+## Data Export
+
+- `df_final_92.csv`: Cleaned dataset for emissions analysis (1992–2022)  
+- `co2_filtered.csv`: Simplified CSV for quick inspection  
+- `co2_analysis.db`: SQLite database with emissions data (`co2_data` table)  
+- `df_final_92_long_v1.csv` and `df_final92_wide_v1.csv`: Tableau-ready formats
+
+---
+
+## Analysis Workflow
+
+- Univariate Analysis: Distribution of emissions, GDP, population, and energy use  
+- Bivariate Analysis: Relationships between emissions and economic/population factors  
+- Time Series Analysis: Emissions trends and top emitters over time  
+- Decoupling Analysis: GDP vs CO₂ growth classification  
+- Temperature Attribution: Correlation between emissions and temperature change  
+- Visualizations: Histograms, scatter plots, bar charts, regression lines
+
+---
+
+## Key Insights
+
+- Strong correlation (r = 0.82) between CO₂ emissions and temperature change  
+- Top emitters in recent decades: China, United States, India, Russia  
+- Fossil-fuel economies (e.g., Japan, South Korea, Italy) show nearly pure CO₂ emissions profiles  
+- Agriculture and land-use economies (e.g., India, Brazil, Indonesia) emit higher shares of methane and nitrous oxide  
+- Mixed industrial economies (e.g., United States, China, Europe) are CO₂-dominant but methane and N₂O emissions are non-trivial  
+- Decoupling is rare but visible — some economies are beginning to bend the curve
+
+---
+
+## File Structure
+
+- `Global.ipynb`: Main Jupyter notebook with full analysis  
+- `README.md`: Project overview and documentation  
+- `df_final_92.csv`: Cleaned dataset (1992–2022)  
+- `co2_filtered.csv`: Simplified version for quick use  
+- `co2_analysis.db`: SQLite database for SQL queries  
+- `df_final_92_long_v1.csv` and `df_final92_wide_v1.csv`: Tableau-ready formats
+
+---
+
+## Getting Started
+
+### Recommended Environment
+
+- Python 3.12.7 or higher  
+- Jupyter Notebook or VS Code
+
+### Setup Instructions
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/co2-emissions-analysis.git
+
+# Install dependencies
+pip install pandas numpy seaborn matplotlib sqlite3
+
+# Project:
+Presentation: https://www.canva.com/design/DAG0BEn4NEc/6G3huE0juw1RvdT5aAkvqA/edit
+Github: 

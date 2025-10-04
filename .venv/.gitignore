@@ -1,0 +1,15 @@
+# Tableau temporary and backup files
+.*.twbr
+*.twbr~
+*.twbx~
+*.twb~
+~$*
+
+# Ignore all CSV files
+*.csv
+
+# Except these three
+!co2_filtered_1992_onward.csv
+!df_final_92_wide_v1.csv
+!df_final_92_long_v1.csv
+
